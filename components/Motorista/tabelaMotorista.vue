@@ -1,23 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { Icon } from '@iconify/vue'
+import type { IMotorista } from '~/types/IMotorista'
 
-// Fazendo a requisição à API
-const { data, error, pending } = await useFetch('https://67a9ea7365ab088ea7e4f65e.mockapi.io/api/estudo/motorista')
-
-// Verificando se os dados foram carregados corretamente
-const motoristas = ref(data.value || [])
+const { data, error, status } = await useFetch<IMotorista[]>("https://67a9ea7365ab088ea7e4f65e.mockapi.io/api/estudo/motorista",
+  { lazy: true });
+  const motoristas = ref(data.value || [])
 </script>
 
 <template>
-  <div class="relative overflow-x-auto">
-    <!-- Exibindo mensagem de carregamento -->
-    <div v-if="pending" class="text-center py-4 text-gray-500">Carregando...</div>
+  <div class="container py-10 mx-auto">
 
-    <!-- Exibindo mensagem de erro -->
-    <div v-if="error" class="text-center py-4 text-red-500">Erro ao carregar os dados!</div>
+    <div v-if="error" class="text-red-500">Erro ao carregar dados: {{ error.message }}</div>
 
-    <!-- Tabela com os dados da API -->
-    <table v-if="!pending && !error" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <template v-if="status === 'pending'">
+      <div class="flex flex-col justify-center items-center space-x-4 py-10">
+        <Icon icon="lucide:loader-circle" class="w-10 h-10 animate-spin text-blue-500" />
+        <span class="text-gray-700 text-lg">Carregando...</span>
+      </div>
+    </template>
+
+
+    <table v-if="!error" class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
         <tr>
           <th scope="col" class="px-6 py-3">Avatar</th>

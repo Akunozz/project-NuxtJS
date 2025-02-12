@@ -1,15 +1,40 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: [
-    "./app.vue",
-    "./src/**/*.{js,ts,jsx,tsx,vue}",
-    './node_modules/flowbite/**/*.js'
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [
-    require('flowbite/plugin')
-  ],
-}
+const animate = require("tailwindcss-animate")
 
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  darkMode: ["class"],
+  content: [
+    './pages/**/*.{ts,tsx,vue}',
+    './components/**/*.{ts,tsx,vue}',
+    './app/**/*.{ts,tsx,vue}',
+    './src/**/*.{ts,tsx,vue}',
+     'node_modules/@nuxt/ui/dist/**/*.js'
+	],
+  prefix: "",
+  theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+    extend: {
+      keyframes: {
+        "accordion-down": {
+          from: { height: 0 },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: 0 },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
+    },
+  },
+  plugins: [animate],
+}
