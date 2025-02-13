@@ -9,7 +9,7 @@
     <NuxtLink class="hover:font-medium" to="/Caminhao/caminhao">Tabela de Caminhão</NuxtLink>
   </nav>
 
-  <main class="container mx-auto">
+  <main class="container mx-auto p-8">
     <slot />
   </main>
 </template>
