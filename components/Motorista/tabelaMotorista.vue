@@ -2,15 +2,14 @@
 import { Icon } from '@iconify/vue'
 import type { IMotorista } from '~/types/IMotorista'
 import cadastroMotorista from './cadastroMotorista.vue';
-import excluirMotorista from './excluirMotorista.vue';
+import DataTable from '../ui/table/data-table.vue';
+import { columns } from '../Motorista/columns';
 
-const { data, error, status } = await useFetch<IMotorista[]>("https://67a9ea7365ab088ea7e4f65e.mockapi.io/api/estudo/motorista",
-  { lazy: true });
+
+const { data, error, status } = await useFetch<IMotorista[]>
+  ("https://67a9ea7365ab088ea7e4f65e.mockapi.io/api/estudo/motorista")
 const motoristas = ref(data.value || [])
 
-const removerMotorista = (id: string) => {
-  motoristas.value = motoristas.value.filter(motorista => motorista.id !== id);
-};
 const adicionarMotorista = (novoMotorista: IMotorista) => {
   motoristas.value.push(novoMotorista);
 };
@@ -28,37 +27,10 @@ const adicionarMotorista = (novoMotorista: IMotorista) => {
       </div>
     </template>
 
-    <cadastroMotorista @motoristaCadastrado="adicionarMotorista" />
-    <table v-if="!error" class="w-full text-sm text-left rtl:text-right">
-      <thead class="text-xs text-white uppercase bg-zinc-700">
-        <tr>
-          <th scope="col" class="px-6 py-3">Avatar</th>
-          <th scope="col" class="px-6 py-3">Nome</th>
-          <th scope="col" class="px-6 py-3">Aniversário</th>
-          <th scope="col" class="px-6 py-3">Validade da CNH</th>
-          <th scope="col" class="px-6 py-3">Excluir</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="motorista in motoristas" :key="motorista.id"
-          class="bg-white border-b dark:bg-zinc-800 dark:border-zinc-700">
-          <td class="px-6 py-4 text-white">
-            <img :src="motorista.avatar" alt="Avatar" class="w-10 h-10 rounded-full" />
-          </td>
-          <td class="px-6 py-4 font-medium text-zinc-900 whitespace-nowrap dark:text-white">
-            {{ motorista.nome }}
-          </td>
-          <td class="px-6 py-4 text-white">
-            {{ new Date(motorista.aniversario).toLocaleDateString() }}
-          </td>
-          <td class="px-6 py-4 text-white">
-            {{ new Date(motorista.validadeCNH).toLocaleDateString() }}
-          </td>
-          <td class="px-6 py-4">
-            <excluirMotorista :id="motorista.id" @motoristaExcluido="removerMotorista" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="container mx-auto">
+      <cadastroMotorista @motoristaCadastrado="adicionarMotorista" />
+      <DataTable :columns="columns" :data="motoristas" />
+    </div>
+
   </div>
 </template>
