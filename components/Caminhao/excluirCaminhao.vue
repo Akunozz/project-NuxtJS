@@ -1,33 +1,26 @@
 <script setup lang="ts">
-import { Icon } from '@iconify/vue';
+import { useCaminhaoService } from '~/services/caminhaoService';
 import { toast } from 'vue-sonner';
+import { Trash2 } from 'lucide-vue-next';
 
-defineProps<{ id: string }>();
-const emit = defineEmits(['caminhaoExcluido']);
+const props = defineProps<{ id: string }>();
+const emit = defineEmits(['CaminhaoExcluido']);
 
-const excluirCaminhao = async (id: string) => {
+const { excluir } = useCaminhaoService();
+
+const removerCaminhao = async () => {
   try {
-    const response = await fetch(`https://67a9ea7365ab088ea7e4f65e.mockapi.io/api/estudo/carro/${id}`, {
-      method: "DELETE",
-    });
-
-    if (response.ok) {
-      toast.success("Caminhao excluído com sucesso");
-      emit('caminhaoExcluido', id);
-    } else {
-      throw new Error("Erro ao excluir caminhao");
-    }
+    await excluir(props.id);
+    toast.success("Caminhão excluído com sucesso")
+    emit('CaminhaoExcluido', props.id);
   } catch (error) {
-    console.error("Erro ao excluir caminhao:", error);
-    toast.error("Erro ao excluir caminhao");
+    toast.error("Erro ao excluir caminhão:");
   }
 };
 </script>
 
 <template>
-  <button 
-    @click="excluirCaminhao(id)" 
-    class="p-2 text-red-500 hover:text-red-700 transition">
-    <Icon icon="mdi:trash-can-outline" class="w-6 h-6" />
+  <button @click="removerCaminhao" class="bg-red-500 text-white p-2 rounded">
+    <Trash2 class="w-5 h-5" />
   </button>
 </template>

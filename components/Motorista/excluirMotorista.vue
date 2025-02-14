@@ -1,33 +1,26 @@
 <script setup lang="ts">
-import { Icon } from '@iconify/vue';
+import { useMotoristaService } from '~/services/motoristaService';
+import { Trash2 } from 'lucide-vue-next';
 import { toast } from 'vue-sonner';
 
-defineProps<{ id: string }>();
+const props = defineProps<{ id: string }>();
 const emit = defineEmits(['motoristaExcluido']);
 
-const excluirMotorista = async (id: string) => {
-  try {
-    const response = await fetch(`https://67a9ea7365ab088ea7e4f65e.mockapi.io/api/estudo/motorista/${id}`, {
-      method: "DELETE",
-    });
+const { excluir } = useMotoristaService();
 
-    if (response.ok) {
-      toast.success("Motorista excluído com sucesso");
-      emit('motoristaExcluido', id);
-    } else {
-      throw new Error("Erro ao excluir motorista");
-    }
+const removerMotorista = async () => {
+  try {
+    await excluir(props.id);
+    toast.success("Motorista excluído com sucesso")
+    emit('motoristaExcluido', props.id);
   } catch (error) {
-    console.error("Erro ao excluir motorista:", error);
-    toast.error("Erro ao excluir motorista");
+    toast.error("Erro ao excluir motorista:");
   }
 };
 </script>
 
 <template>
-  <button 
-    @click="excluirMotorista(id)" 
-    class="p-2 text-red-500 hover:text-red-700 transition">
-    <Icon icon="mdi:trash-can-outline" class="w-6 h-6" />
+  <button @click="removerMotorista" class="bg-red-500 text-white p-2 rounded">
+    <Trash2 class="w-5 h-5" />
   </button>
 </template>

@@ -8,8 +8,9 @@ module.exports = {
     './components/**/*.{ts,tsx,vue}',
     './app/**/*.{ts,tsx,vue}',
     './src/**/*.{ts,tsx,vue}',
-     'node_modules/@nuxt/ui/dist/**/*.js'
-	],
+    'node_modules/@nuxt/ui/dist/**/*.js',
+    "./node_modules/flowbite/**/*.{js,ts}"
+  ],
   prefix: "",
   theme: {
     container: {
@@ -36,5 +37,8 @@ module.exports = {
       },
     },
   },
-  plugins: [animate],
+  plugins: [
+    require('flowbite/plugin'),
+    animate
+  ]
 }
