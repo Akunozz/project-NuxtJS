@@ -27,7 +27,7 @@ const removerMotorista = (id: string) => {
 </script>
 
 <template>
-  <div class="container py-10 mx-auto">
+  <div class="container sm:py-10 mx-auto">
     <div v-if="error" class="text-red-500">Erro ao carregar dados: {{ error.message }}</div>
 
     <div class="container mx-auto">

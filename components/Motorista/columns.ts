@@ -14,7 +14,7 @@ export const columns: ColumnDef<IMotorista>[] = [
             return h('img', {
                 src: avatarUrl,
                 alt: 'Foto do motorista',
-                class: 'w-12 h-12 rounded-full object-cover mx-auto'
+                class: 'w-5 h-5 sm:w-12 sm:h-12 rounded-full object-cover mx-auto'
             });
         }
     },

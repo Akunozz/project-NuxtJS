@@ -6,5 +6,7 @@ definePageMeta({
 </script>
 
 <template>
-  <tabelaMotorista />
+  <div class="text-sm sm:text-base">
+    <tabelaMotorista />
+  </div>
 </template>

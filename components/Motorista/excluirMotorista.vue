@@ -21,6 +21,6 @@ const removerMotorista = async () => {
 
 <template>
   <button @click="removerMotorista" class="bg-red-500 text-white p-2 rounded">
-    <Trash2 class="w-5 h-5" />
+    <Trash2 class="w-2 h-2 sm:w-5 sm:h-5" />
   </button>
 </template>
